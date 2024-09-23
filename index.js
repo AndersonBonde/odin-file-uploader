@@ -6,10 +6,9 @@ const session = require('express-session');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcryptjs');
-const { PrismaClient } = require('@prisma/client');
+const prisma = require('./database/prisma');
 
 const app = express();
-const prisma = new PrismaClient();
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
