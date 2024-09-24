@@ -6,6 +6,8 @@ const router = new Router();
 router.get('/', indexController.index);
 router.get('/signup', indexController.signUpGet);
 router.post('/signup', indexController.signUpPost);
-// TODO login, logout
+router.get('/login', indexController.loginGet);
+router.post('/login', indexController.loginPost);
+// TODO logout
 
 module.exports = router;

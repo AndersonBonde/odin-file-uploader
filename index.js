@@ -44,7 +44,7 @@ const strategy = new LocalStrategy({
     try {
       const user = await prisma.user.findUnique({
         where: {
-          email: email,
+          email: email
         }
       });
 

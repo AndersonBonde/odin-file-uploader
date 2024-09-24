@@ -6,8 +6,15 @@
   <title><%= title %></title>
 </head>
 <body>
-  <h1><%= title %></h1>
+  <main>
+    <header>
+      <h1><%= title %></h1>
+      <% if (locals.user) { %>
+        <p>Welcome <%= `${user.firstname} ${user.lastname}` %></p>
+      <% } %>
+    </header>
+  </main>
   <a href="/signup">Sign Up</a>
-  <!-- TODO homepage scaffold + login & signup link -->
+  <a href="/login">Login</a>
 </body>
 </html>

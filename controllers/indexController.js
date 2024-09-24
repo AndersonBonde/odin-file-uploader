@@ -1,14 +1,16 @@
 const { body, validationResult } = require('express-validator');
+const passport = require('passport');
 const bcrypt = require('bcryptjs');
 const prisma = require('../database/prisma');
 
-const index = async (req, res) => {
+const index = (req, res) => {
   res.render('index', {
     title: 'Index page',
+    user: req.user,
   });
 };
 
-const signUpGet = async (req, res) => {
+const signUpGet = (req, res) => {
   res.render('signup_form', {
     title: 'Sign Up',
   });
@@ -66,8 +68,22 @@ const signUpPost = [
   }
 ];
 
+const loginGet = (req, res) => {
+  res.render('login_form', {
+    title: 'Login',
+  });
+};
+
+const loginPost = passport.authenticate('local', {
+  successRedirect: '/',
+  failureRedirect: '/login',
+  failureMessage: true,
+});
+
 module.exports = {
   index,
   signUpGet,
   signUpPost,
+  loginGet,
+  loginPost,
 }
