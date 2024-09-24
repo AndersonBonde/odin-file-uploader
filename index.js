@@ -49,7 +49,7 @@ const strategy = new LocalStrategy({
       });
 
       if (!user) {
-        return done(null, false, { message: 'Incorrect email' });
+        return done(null, false, { message: 'The given email is not registered' });
       }
 
       const match = await bcrypt.compare(password, user.password);

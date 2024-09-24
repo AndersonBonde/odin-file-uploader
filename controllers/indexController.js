@@ -71,6 +71,7 @@ const signUpPost = [
 const loginGet = (req, res) => {
   res.render('login_form', {
     title: 'Login',
+    errors: req.session.messages ? [{ msg: req.session.messages.at(-1) }] : [],
   });
 };
 
@@ -80,10 +81,21 @@ const loginPost = passport.authenticate('local', {
   failureMessage: true,
 });
 
+const logoutGet = (req, res, next) => {
+  req.logout((err) => {
+    if (err) {
+      return next(err);
+    }
+
+    res.redirect('/');
+  })
+};
+
 module.exports = {
   index,
   signUpGet,
   signUpPost,
   loginGet,
   loginPost,
+  logoutGet,
 }

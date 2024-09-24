@@ -11,10 +11,12 @@
       <h1><%= title %></h1>
       <% if (locals.user) { %>
         <p>Welcome <%= `${user.firstname} ${user.lastname}` %></p>
+        <a href="/logout">Logout</a>
+      <% } else { %>
+        <a href="/signup">Sign Up</a>
+        <a href="/login">Login</a>
       <% } %>
     </header>
   </main>
-  <a href="/signup">Sign Up</a>
-  <a href="/login">Login</a>
 </body>
 </html>
