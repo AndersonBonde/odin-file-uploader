@@ -21,7 +21,7 @@ const signUpPost = [
     .isLength({ min: 1 }).withMessage('Your last name must not be empty'),
   body('email').trim()
     .custom(async (value) => {
-      const user = prisma.user.findUnique({
+      const user = await prisma.user.findUnique({
         where: {
           email: value,
         }
@@ -34,7 +34,7 @@ const signUpPost = [
   body('password').trim()
     .isLength({ min: 3 }).withMessage('Password minimum length is 3'),
   body('password_confirm').trim()
-    .custom(async (value, { req }) => {
+    .custom((value, { req }) => {
       return req.body.password === value;
     }).withMessage(`Your password and password confirmation value didn't match`),
   async (req, res, next) => {
@@ -48,8 +48,19 @@ const signUpPost = [
         errors: errors.array(),
       });
     } else {
-      // TODO bcrypt the new password to database;
-      console.log('Sign Up successful WIP');
+      bcrypt.hash(req.body.password, 10, async (err, hashedPassword) => {
+        if (err) next(err);
+
+        await prisma.user.create({
+          data: {
+            email: req.body.email,
+            firstname: req.body.firstname,
+            lastname: req.body.lastname,
+            password: hashedPassword,
+          }
+        })
+      });
+
       res.redirect('/');
     }
   }

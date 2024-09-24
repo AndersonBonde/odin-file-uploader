@@ -6,6 +6,36 @@
   <title><%= title %></title>
 </head>
 <body>
-  WIP signup form
+  <main>
+    <header>
+      <h1><%= title %></h1>
+    </header>
+    <form action="/signup" method="post">
+      <div class="form_row">
+        <label for="firstname">First name</label>
+        <input type="text" name="firstname" id="firstname" value="<%= undefined === locals.info ? '' : info.firstname %>" required>
+      </div>
+      <div class="form_row">
+        <label for="lastname">Last name</label>
+        <input type="text" name="lastname" id="lastname" value="<%= undefined === locals.info ? '' : info.lastname %>" required>
+      </div>
+      <div class="form_row">
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" value="<%= undefined === locals.info ? '' : info.email %>" required>
+      </div>
+      <div class="form_row">
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" required>
+      </div>
+      <div class="form_row">
+        <label for="password_confirm">Confirm your password</label>
+        <input type="password" name="password_confirm" id="password_confirm" required>
+      </div>
+      <button type="submit">Submit</button>
+    </form>
+
+    <br>
+    <%- include('./partials/error.ejs') %>
+  </main>
 </body>
 </html>
