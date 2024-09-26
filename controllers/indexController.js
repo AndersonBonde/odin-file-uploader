@@ -2,6 +2,9 @@ const { body, validationResult } = require('express-validator');
 const passport = require('passport');
 const bcrypt = require('bcryptjs');
 const prisma = require('../database/prisma');
+const multer = require('multer');
+
+const upload = multer({ dest: 'uploads/' });
 
 const index = (req, res) => {
   res.render('index', {
@@ -91,6 +94,23 @@ const logoutGet = (req, res, next) => {
   })
 };
 
+const uploadGet = (req, res) => {
+  if (!req.user) res.redirect('/');
+
+  res.render('upload_form', {
+    title: 'Upload a file',
+  });
+};
+
+const uploadPost = [
+  upload.single('file'),
+  (req, res) => {  
+    console.log('Upload successfully WIP', 'req.file: ', req.file);
+
+    res.redirect('/');
+  }
+];
+
 module.exports = {
   index,
   signUpGet,
@@ -98,4 +118,6 @@ module.exports = {
   loginGet,
   loginPost,
   logoutGet,
+  uploadGet,
+  uploadPost,
 }
