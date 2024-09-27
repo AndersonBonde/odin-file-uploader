@@ -105,7 +105,7 @@ const uploadGet = (req, res) => {
 const uploadPost = [
   upload.single('file'),
   (req, res) => {  
-    console.log('Upload successfully WIP', 'req.file: ', req.file);
+    console.log('Upload successfully WIP', req.file);
 
     res.redirect('/');
   }
