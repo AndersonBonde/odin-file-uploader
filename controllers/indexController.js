@@ -62,6 +62,9 @@ const signUpPost = [
             firstname: req.body.firstname,
             lastname: req.body.lastname,
             password: hashedPassword,
+            mainFolder: {
+              create: { name: 'main' },
+            }
           }
         })
       });
