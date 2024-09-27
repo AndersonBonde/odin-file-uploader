@@ -6,10 +6,26 @@ const multer = require('multer');
 
 const upload = multer({ dest: 'uploads/' });
 
-const index = (req, res) => {
+const index = async (req, res) => {
+  let user = undefined;
+  let folder = undefined;
+  
+  if (req.user) {
+    user = await prisma.user.findUnique({
+      where: { email: req.user.email },
+      include: { mainFolder: true },
+    });
+
+    folder = await prisma.folder.findUnique({
+      where: { userId: req.user.id },
+      include: { files: true },
+    });
+  }
+
   res.render('index', {
     title: 'Index page',
-    user: req.user,
+    user: user,
+    folder: folder,
   });
 };
 
@@ -105,10 +121,25 @@ const uploadGet = (req, res) => {
   });
 };
 
+// TODO upload should require a route :id
 const uploadPost = [
   upload.single('file'),
-  (req, res) => {  
-    console.log('Upload successfully WIP', req.file);
+  async (req, res) => {  
+    const folder = await prisma.folder.findUnique({
+      where: {
+        name: 'main',
+        userId: req.user.id,
+      }
+    });
+
+    const file = await prisma.file.create({
+      data: {
+        name: req.file.originalname,
+        size: req.file.size,
+        url: req.file.path,
+        folderId: folder.id,
+      }
+    });
 
     res.redirect('/');
   }

@@ -20,7 +20,21 @@
         <a href="/login">Login</a>
       <% } %>
     </header>
-
+    <br>
+    <div class="folders">
+      <% if (locals.user) { %>
+        <p><%= user.mainFolder.name %>/</p>
+        <ul>
+          <% if (locals.folder) { %>
+            <% folder.files.forEach((file) => { %>
+              <li>
+                <%= file.name %>
+              </li>
+            <% }) %>
+          <% } %>
+        </ul>
+      <% } %>
+    </div>
   </main>
 </body>
 </html>
