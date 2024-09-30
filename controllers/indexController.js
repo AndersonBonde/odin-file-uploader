@@ -116,19 +116,12 @@ const uploadGet = (req, res) => {
 const uploadPost = [
   upload.single('file'),
   async (req, res) => {  
-    const folder = await prisma.folder.findUnique({
-      where: {
-        name: 'main',
-        userId: req.user.id,
-      }
-    });
-
     const file = await prisma.file.create({
       data: {
         name: req.file.originalname,
         size: req.file.size,
         url: req.file.path,
-        folderId: folder.id,
+        userId: req.user.id,
       }
     });
 

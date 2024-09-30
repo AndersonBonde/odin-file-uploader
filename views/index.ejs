@@ -16,7 +16,7 @@
         <p>Welcome <%= `${user.firstname} ${user.lastname}` %></p>
         <a href="/logout">Logout</a>
         <a href="/upload">Upload a file</a>
-        <a href="/folder/create/<%= folder.id %>">Create a new folder</a>
+        <a href="/folder/create">Create a new folder</a>
       <% } else { %>
         <a href="/signup">Sign Up</a>
         <a href="/login">Login</a>
@@ -25,7 +25,6 @@
     <br>
     <div class="foldersAndFiles">
       <% if (locals.user) { %>
-        <p><%= user.mainFolder.name %>/</p>
         <ul>
           <% user.folders.forEach((folder) => { %>
             <li>
