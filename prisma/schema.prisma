@@ -15,12 +15,13 @@ model Session {
 }
 
 model User {
-  id         Int     @id @default(autoincrement())
-  email      String  @unique
-  firstname  String
-  lastname   String
-  password   String
-  mainFolder Folder?
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  firstname String
+  lastname  String
+  password  String
+  folders   Folder[]
+  files     File[]
 }
 
 model Folder {
@@ -31,7 +32,7 @@ model Folder {
   parentFolder Folder?  @relation("children", fields: [parentId], references: [id])
   folders      Folder[] @relation("children")
   user         User     @relation(fields: [userId], references: [id])
-  userId       Int      @unique
+  userId       Int
 }
 
 model File {
@@ -42,4 +43,6 @@ model File {
   folder   Folder   @relation(fields: [folderId], references: [id])
   folderId Int
   url      String   @default("/")
+  user     User     @relation(fields: [userId], references: [id])
+  userId   Int
 }

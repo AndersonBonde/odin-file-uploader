@@ -16,6 +16,7 @@
         <p>Welcome <%= `${user.firstname} ${user.lastname}` %></p>
         <a href="/logout">Logout</a>
         <a href="/upload/<%= folder.id %>">Upload a file</a>
+        <a href="/folder/create/<%= folder.id %>">Create a new folder</a>
       <% } else { %>
         <a href="/signup">Sign Up</a>
         <a href="/login">Login</a>
@@ -30,6 +31,11 @@
             <% folder.files.forEach((file) => { %>
               <li>
                 <%= file.name %>
+              </li>
+            <% }) %>
+            <% folder.folders.forEach((folder) => { %>
+              <li>
+                <%= folder.name %>
               </li>
             <% }) %>
           <% } %>
