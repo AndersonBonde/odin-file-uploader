@@ -11,9 +11,9 @@ router.post('/login', indexController.loginPost);
 router.get('/logout', indexController.logoutGet);
 router.get('/upload', indexController.uploadGet);
 router.post('/upload', indexController.uploadPost);
-router.get('/upload/:id', indexController.uploadGet);
-router.post('/upload/:id', indexController.uploadPost);
-router.get('/folder/create/:id', indexController.folderCreateGet);
-router.post('/folder/create/:id', indexController.folderCreatePost);
+router.get('/upload/:id', indexController.uploadToFolderGet);
+router.post('/upload/:id', indexController.uploadToFolderPost);
+router.get('/folder/create', indexController.createFolderOnUserGet);
+router.post('/folder/create', indexController.createFolderOnUserPost);
 
 module.exports = router;

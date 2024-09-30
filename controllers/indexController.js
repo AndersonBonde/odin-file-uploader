@@ -106,8 +106,6 @@ const logoutGet = (req, res, next) => {
 const uploadGet = (req, res) => {
   if (!req.user) res.redirect('/');
 
-  console.log(req.params);
-
   res.render('upload_form', {
     title: 'Upload a file',
   });
@@ -116,7 +114,7 @@ const uploadGet = (req, res) => {
 const uploadPost = [
   upload.single('file'),
   async (req, res) => {  
-    const file = await prisma.file.create({
+    await prisma.file.create({
       data: {
         name: req.file.originalname,
         size: req.file.size,
@@ -129,42 +127,40 @@ const uploadPost = [
   }
 ];
 
-const folderCreateGet = async (req, res) => {
-  const folder = { id: req.params.id };
-    
+// TODO upload GET inside a folder;
+const uploadToFolderGet = (req, res) => {
+  console.log('uploadToFolderGet WIP');
+
+  res.redirect('/');
+};
+
+// TODO upload POST inside a folder;
+const uploadToFolderPost = async (req, res) => {
+  console.log('uploadToFolderPost WIP');
+
+  res.redirect('/');
+}
+
+const createFolderOnUserGet = async (req, res) => {
   res.render('folder_form', {
     title: 'Create a folder',
-    folder: folder,
   });
 };
 
-const folderCreatePost = [
+const createFolderOnUserPost = [
   body('name').trim()
     .isLength({ min: 1 }).withMessage('Please give your new folder a name'),
   async (req, res) => {
     const errors = validationResult(req);
-    const folder = { id: req.params.id, name: req.body.name };
 
     if (!errors.isEmpty()) {
       res.render('folder_form', {
         title: 'Create a folder',
-        folder: folder,
         errors: errors.array(),
       })
     } else {
-      const newFolder = await prisma.folder.update({
-        where: { id: req.params.id },
-        data: {
-          folders: {
-            create: {
-              name: req.body.name,
-              parentId: +req.params.id,
-              userId: +req.user.id,
-            }
-          }
-        }
-      });
-      console.log(newFolder);
+      // TODO create a folder inside a User model;
+      console.log('createFolderOnUserPost successful WIP');
     
       res.redirect('/');
     }
@@ -181,6 +177,8 @@ module.exports = {
   logoutGet,
   uploadGet,
   uploadPost,
-  folderCreateGet,
-  folderCreatePost,  
+  uploadToFolderGet,
+  uploadToFolderPost,
+  createFolderOnUserGet,
+  createFolderOnUserPost,  
 }
