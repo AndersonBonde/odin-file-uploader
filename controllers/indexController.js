@@ -8,24 +8,17 @@ const upload = multer({ dest: 'uploads/' });
 
 const index = async (req, res) => {
   let user = undefined;
-  let folder = undefined;
   
   if (req.user) {
     user = await prisma.user.findUnique({
       where: { email: req.user.email },
-      include: { mainFolder: true },
-    });
-
-    folder = await prisma.folder.findUnique({
-      where: { name: 'main', userId: req.user.id },
-      include: { files: true, folders: true },
+      include: { folders: true, files: true },
     });
   }
 
   res.render('index', {
     title: 'Index page',
-    user: user,
-    folder: folder,
+    user: user
   });
 };
 
@@ -77,10 +70,7 @@ const signUpPost = [
             email: req.body.email,
             firstname: req.body.firstname,
             lastname: req.body.lastname,
-            password: hashedPassword,
-            mainFolder: {
-              create: { name: 'main' },
-            }
+            password: hashedPassword
           }
         })
       });
@@ -123,7 +113,6 @@ const uploadGet = (req, res) => {
   });
 };
 
-// TODO upload should require a route :id
 const uploadPost = [
   upload.single('file'),
   async (req, res) => {  

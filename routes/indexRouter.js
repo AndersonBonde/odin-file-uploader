@@ -9,6 +9,8 @@ router.post('/signup', indexController.signUpPost);
 router.get('/login', indexController.loginGet);
 router.post('/login', indexController.loginPost);
 router.get('/logout', indexController.logoutGet);
+router.get('/upload', indexController.uploadGet);
+router.post('/upload', indexController.uploadPost);
 router.get('/upload/:id', indexController.uploadGet);
 router.post('/upload/:id', indexController.uploadPost);
 router.get('/folder/create/:id', indexController.folderCreateGet);
