@@ -15,6 +15,7 @@
       <% if (locals.user) { %>
         <p>Welcome <%= `${user.firstname} ${user.lastname}` %></p>
         <a href="/logout">Logout</a>
+        <a href="/upload/<%= folder.id %>">Upload a file</a>
       <% } else { %>
         <a href="/signup">Sign Up</a>
         <a href="/login">Login</a>

@@ -17,7 +17,7 @@ const index = async (req, res) => {
     });
 
     folder = await prisma.folder.findUnique({
-      where: { userId: req.user.id },
+      where: { name: 'main', userId: req.user.id },
       include: { files: true },
     });
   }
@@ -115,6 +115,8 @@ const logoutGet = (req, res, next) => {
 
 const uploadGet = (req, res) => {
   if (!req.user) res.redirect('/');
+
+  console.log(req.params);
 
   res.render('upload_form', {
     title: 'Upload a file',
