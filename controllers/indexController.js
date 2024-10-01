@@ -179,6 +179,36 @@ const createFolderOnUserPost = [
   }
 ];
 
+const createFolderOnFolderGet = async (req, res) => {
+  res.render('folder_form', {
+    title: 'Create a folder'
+  })
+};
+
+const createFolderOnFolderPost = [
+  body('name').trim()
+    .isLength({ min: 1 }).withMessage('Please give your new folder a name'),
+  async (req, res) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      res.render('folder_form', {
+        title: 'Create a folder',
+        errors: errors.array(),
+      })
+    } else {
+      await prisma.folder.create({
+        data: {
+          name: req.body.name,
+          parentId: +req.params.id
+        }
+      });
+    
+      res.redirect(`/folder/${req.params.id}`);
+    }
+  }
+];
+
 const folderGet = async (req, res) => {
   const folder = await prisma.folder.findUnique({
     where: { id: +req.params.id },
@@ -205,5 +235,7 @@ module.exports = {
   uploadToFolderPost,
   createFolderOnUserGet,
   createFolderOnUserPost,  
+  createFolderOnFolderGet,
+  createFolderOnFolderPost,
   folderGet,
 }

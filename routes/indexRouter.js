@@ -15,6 +15,8 @@ router.get('/upload/:id', indexController.uploadToFolderGet);
 router.post('/upload/:id', indexController.uploadToFolderPost);
 router.get('/folder/create', indexController.createFolderOnUserGet);
 router.post('/folder/create', indexController.createFolderOnUserPost);
+router.get('/folder/create/:id', indexController.createFolderOnFolderGet);
+router.post('/folder/create/:id', indexController.createFolderOnFolderPost);
 router.get('/folder/:id', indexController.folderGet);
 
 module.exports = router;
