@@ -127,19 +127,27 @@ const uploadPost = [
   }
 ];
 
-// TODO upload GET inside a folder;
 const uploadToFolderGet = (req, res) => {
-  console.log('uploadToFolderGet WIP');
-
-  res.redirect('/');
+  res.render('upload_form', {
+    title: 'Upload a file'
+  });
 };
 
-// TODO upload POST inside a folder;
-const uploadToFolderPost = async (req, res) => {
-  console.log('uploadToFolderPost WIP');
-
-  res.redirect('/');
-}
+const uploadToFolderPost = [
+  upload.single('file'),
+  async (req, res) => {
+    await prisma.file.create({
+      data: {
+        name: req.file.originalname,
+        size: req.file.size,
+        url: req.file.path,
+        folderId: +req.params.id
+      }
+    });
+  
+    res.redirect(`/folder/${req.params.id}`);
+  }
+]
 
 const createFolderOnUserGet = async (req, res) => {
   res.render('folder_form', {
@@ -159,14 +167,30 @@ const createFolderOnUserPost = [
         errors: errors.array(),
       })
     } else {
-      // TODO create a folder inside a User model;
-      console.log('createFolderOnUserPost successful WIP');
+      await prisma.folder.create({
+        data: {
+          name: req.body.name,
+          userId: req.user.id
+        }
+      });
     
       res.redirect('/');
     }
   }
 ];
 
+const folderGet = async (req, res) => {
+  const folder = await prisma.folder.findUnique({
+    where: { id: +req.params.id },
+    include: { files: true, folders: true }
+  });
+  
+  res.render('folder', {
+    title: folder.name,
+    folder: folder,
+    user: req.user
+  });
+}
 
 module.exports = {
   index,
@@ -181,4 +205,5 @@ module.exports = {
   uploadToFolderPost,
   createFolderOnUserGet,
   createFolderOnUserPost,  
+  folderGet,
 }

@@ -11,31 +11,26 @@
   
   <main>
     <header>
-      <% if (locals.user) { %>
-        <div class="user_info">
-          <p>User: <%= `${user.firstname} ${user.lastname}` %></p>
-          <a href="/logout">Logout</a>
-        </div>
-        <% } else { %>
-          <a href="/signup">Sign Up</a>
-          <a href="/login">Login</a>
-        <% } %>
-        <h1><%= title %></h1>
-        <a href="/upload">Upload a file</a>
-        <a href="/folder/create">Create a new folder</a>
+      <div class="user_info">
+        <p>User: <%= `${user.firstname} ${user.lastname}` %></p>
+        <a href="/logout">Logout</a>
+      </div>
+      <h1><%= title %></h1>
+      <a href="/upload/<%= folder.id %>">Upload a file</a>
+      <a href="/folder/create/<%= folder.id %>">Create a new folder</a>
     </header>
     <br>
     <div class="foldersAndFiles">
-      <% if (locals.user) { %>
+      <% if (locals.folder) { %>
         <ul>
-          <% user.folders.forEach((folder) => { %>
+          <% folder.folders.forEach((folder) => { %>
             <li>
               <a href="folder/<%= folder.id %>">
                 <%= folder.name %>
               </a>
             </li>
           <% }) %>
-          <% user.files.forEach((file) => { %>
+          <% folder.files.forEach((file) => { %>
             <li>
               <%= file.name + ' file' %>
             </li>
