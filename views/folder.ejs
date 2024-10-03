@@ -15,9 +15,13 @@
         <p>User: <%= `${user.firstname} ${user.lastname}` %></p>
         <a href="/logout">Logout</a>
       </div>
+      <div class="header_buttons">
+        <a href="/upload/<%= folder.id %>">Upload a file</a>
+        <a href="/folder/create/<%= folder.id %>">Create a new folder</a>
+      </div>
       <h1><%= title %></h1>
-      <a href="/upload/<%= folder.id %>">Upload a file</a>
-      <a href="/folder/create/<%= folder.id %>">Create a new folder</a>
+      <a href="update/<%= folder.id %>" style="font-size: .95rem;">Rename folder</a>
+      <a href="<%= null == folder.parentId ? '/' : `/folder/${folder.parentId}` %>">Back</a>
     </header>
     <br>
     <div class="foldersAndFiles">

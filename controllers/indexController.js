@@ -222,6 +222,39 @@ const folderGet = async (req, res) => {
   });
 }
 
+const updateFolderGet = (req, res) => {
+  res.render('folder_form', {
+    title: 'Rename folder'
+  });
+};
+
+const updateFolderPost = [
+  body('name').trim()
+    .isLength({ min: 1 }).withMessage('Please give your new folder a name'),
+  async (req, res) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      res.render('folder_form', {
+        title: 'Rename folder',
+        errors: errors.array(),
+      })
+    } else {
+      await prisma.folder.update({
+        where: {
+          id: +req.params.id
+        },
+        data: {
+          name: req.body.name
+        }
+      });
+    
+      res.redirect(`/folder/${req.params.id}`);
+    }
+
+  }
+];
+
 module.exports = {
   index,
   signUpGet,
@@ -238,4 +271,6 @@ module.exports = {
   createFolderOnFolderGet,
   createFolderOnFolderPost,
   folderGet,
+  updateFolderGet,
+  updateFolderPost,
 }

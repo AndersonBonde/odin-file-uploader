@@ -16,13 +16,15 @@
           <p>User: <%= `${user.firstname} ${user.lastname}` %></p>
           <a href="/logout">Logout</a>
         </div>
+        <div class="header_buttons">
+          <a href="/upload">Upload a file</a>
+          <a href="/folder/create">Create a folder</a>
+        </div>
         <% } else { %>
           <a href="/signup">Sign Up</a>
           <a href="/login">Login</a>
         <% } %>
         <h1><%= title %></h1>
-        <a href="/upload">Upload a file</a>
-        <a href="/folder/create">Create a new folder</a>
     </header>
     <br>
     <div class="foldersAndFiles">
