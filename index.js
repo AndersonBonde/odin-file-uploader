@@ -87,7 +87,9 @@ passport.deserializeUser(async (id, done) => {
 // --- Routes
 
 const indexRouter = require('./routes/indexRouter');
+const folderRouter = require('./routes/folderRouter');
 
 app.use('/', indexRouter);
+app.use('/folder', folderRouter);
 
 app.listen(3000, () => console.log(`App listening on port 3000!`));
