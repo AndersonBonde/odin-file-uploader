@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body>
+  <%- include('./partials/sidebar_nav.ejs') %>
+  
+  <main>
+    <header>
+      <div class="user_info">
+        <p>User: <%= `${user.firstname} ${user.lastname}` %></p>
+        <a href="/logout">Logout</a>
+      </div>
+      <h1><%= title %></h1>
+      <a href="/file/delete/<%= file.id %>" onclick="return confirm('Are you sure you want to delete this file?');">Delete</a>
+    </header>
+    <br>
+
+    <p>Name: <%= file.name %></p>    
+    <p>Size: <%= file.size %> bytes</p>
+    <p>Uploaded At: <%= new Date(file.uploadAt).toLocaleDateString(undefined ,{ day: 'numeric', month: 'long', year: 'numeric' })  %></p>
+    <br>
+    <a href="">Download WIP</a>
+  </main>
+</body>
+</html>

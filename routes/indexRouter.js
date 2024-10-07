@@ -11,6 +11,7 @@ router.post('/login', indexController.loginPost);
 router.get('/logout', indexController.logoutGet);
 router.get('/upload', indexController.uploadGet);
 router.post('/upload', indexController.uploadPost);
-
+router.get('/file/:id', indexController.fileGet);
+router.get('/file/delete/:id', indexController.fileDeleteGet);
 
 module.exports = router;

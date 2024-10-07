@@ -127,6 +127,34 @@ const uploadPost = [
   }
 ];
 
+const fileGet = async (req, res) => {
+  const user = await prisma.user.findUnique({
+    where: { id: +req.user.id }
+  });
+  
+  const file = await prisma.file.findUnique({
+    where: { id: +req.params.id }
+  });
+
+  res.render('file', {
+    title: file.name,
+    user: user,
+    file: file
+  });
+};
+
+const fileDeleteGet = async (req, res) => {
+  const deletedFile = await prisma.file.delete({
+    where: { id: +req.params.id }
+  });
+
+  const path = deletedFile.folderId !== null
+    ? `/folder/${deletedFile.folderId}`
+    : '/';
+
+  res.redirect(path);
+};
+
 module.exports = {
   index,
   signUpGet,
@@ -136,4 +164,6 @@ module.exports = {
   logoutGet,
   uploadGet,
   uploadPost,
+  fileGet,
+  fileDeleteGet,
 }

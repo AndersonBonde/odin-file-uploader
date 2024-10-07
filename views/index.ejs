@@ -32,14 +32,16 @@
         <ul>
           <% user.folders.forEach((folder) => { %>
             <li>
-              <a href="folder/<%= folder.id %>">
-                <%= folder.name %>
+              <a href="folder/<%= folder.id %>" class="folder">
+                <span class="folder_icon">&#128448;</span> <%= folder.name %>
               </a>
             </li>
           <% }) %>
           <% user.files.forEach((file) => { %>
             <li>
-              <%= file.name + ' file' %>
+              <a href="/file/<%= file.id %>" class="file">
+                <%= file.name %>
+              </a>
             </li>
           <% }) %>
         </ul>

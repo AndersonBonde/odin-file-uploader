@@ -29,14 +29,16 @@
         <ul>
           <% folder.folders.forEach((folder) => { %>
             <li>
-              <a href="<%= folder.id %>">
-                <%= folder.name %>
+              <a href="<%= folder.id %>" class="folder">
+                &#128448; <%= folder.name %>
               </a>
             </li>
           <% }) %>
           <% folder.files.forEach((file) => { %>
             <li>
-              <%= file.name + ' file' %>
+              <a href="/file/<%= file.id %>" class="file">
+                <%= file.name %>
+              </a>
             </li>
           <% }) %>
         </ul>
