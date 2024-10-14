@@ -11,7 +11,7 @@ router.get('/create/:id', folderController.createFolderOnFolderGet);
 router.post('/create/:id', folderController.createFolderOnFolderPost);
 router.get('/update/:id', folderController.updateFolderGet);
 router.post('/update/:id', folderController.updateFolderPost);
-// TODO delete folder
+router.get('/delete/:id', folderController.deleteFolderGet);
 router.get('/:id', folderController.folderGet);
 
 module.exports = router;

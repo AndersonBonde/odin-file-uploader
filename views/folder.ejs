@@ -21,6 +21,7 @@
       </div>
       <h1><%= title %></h1>
       <a href="update/<%= folder.id %>" style="font-size: .95rem;">Rename folder</a>
+      <a href="delete/<%= folder.id %>" onclick="return confirm(`Are you sure you want to delete this folder?`)" >Delete</a>
       <a href="<%= null == folder.parentId ? '/' : `/folder/${folder.parentId}` %>">Back</a>
     </header>
     <br>

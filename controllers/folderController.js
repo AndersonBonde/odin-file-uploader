@@ -1,3 +1,4 @@
+const fs = require('node:fs');
 const { body, validationResult } = require('express-validator');
 const prisma = require('../database/prisma');
 const multer = require('multer');
@@ -86,19 +87,6 @@ const createFolderOnFolderPost = [
   }
 ];
 
-const folderGet = async (req, res) => {
-  const folder = await prisma.folder.findUnique({
-    where: { id: +req.params.id },
-    include: { files: true, folders: true }
-  });
-  
-  res.render('folder', {
-    title: folder.name,
-    folder: folder,
-    user: req.user
-  });
-}
-
 const updateFolderGet = (req, res) => {
   res.render('folder_form', {
     title: 'Rename folder'
@@ -132,6 +120,67 @@ const updateFolderPost = [
   }
 ];
 
+const deleteFolderAndAllChildren = async (id) => {
+  const childrenFiles = await prisma.file.findMany({
+    where: { folderId: +id }
+  });
+  
+  if (childrenFiles.length > 0) {
+    await prisma.file.deleteMany({
+      where: { folderId: +id }
+    });
+
+    childrenFiles.forEach((file) => {
+      fs.unlink(file.url, (err) => {
+        if (err) throw new Error('File path was not found');
+      });
+    })
+  }
+  console.log(`Deleted ${childrenFiles.length} files: `, childrenFiles);
+  
+  const childrenFolder = await prisma.folder.findMany({
+    where: { parentId: +id }
+  });
+
+  if (childrenFolder.length > 0) {
+    childrenFolder.forEach((child) => {
+      deleteFolderAndAllChildren(child.id);
+    });
+  }
+
+  const deletedFolder = await prisma.folder.delete({
+    where: { id: +id }
+  });
+  console.log('Deleted folder: ', deletedFolder);
+}
+
+const deleteFolderGet = async (req, res) => {
+  const deletedFolder = await prisma.folder.findUnique({
+    where: { id: +req.params.id }
+  });
+
+  await deleteFolderAndAllChildren(+req.params.id);
+
+  const path = deletedFolder.parentId !== null
+    ? `/folder/${deletedFolder.parentId}`
+    : '/';
+
+  res.redirect(path);
+};
+
+const folderGet = async (req, res) => {
+  const folder = await prisma.folder.findUnique({
+    where: { id: +req.params.id },
+    include: { files: true, folders: true }
+  });
+  
+  res.render('folder', {
+    title: folder.name,
+    folder: folder,
+    user: req.user
+  });
+}
+
 module.exports = {
   uploadToFolderGet,
   uploadToFolderPost,
@@ -139,7 +188,8 @@ module.exports = {
   createFolderOnUserPost,  
   createFolderOnFolderGet,
   createFolderOnFolderPost,
-  folderGet,
   updateFolderGet,
   updateFolderPost,
+  deleteFolderGet,
+  folderGet,
 }
