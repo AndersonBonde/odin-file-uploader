@@ -9,9 +9,9 @@ router.post('/signup', indexController.signUpPost);
 router.get('/login', indexController.loginGet);
 router.post('/login', indexController.loginPost);
 router.get('/logout', indexController.logoutGet);
-router.get('/upload', indexController.uploadGet);
-router.post('/upload', indexController.uploadPost);
-router.get('/file/:id', indexController.fileGet);
+router.get('/upload', indexController.uploadToUserGet);
+router.post('/upload', indexController.uploadToUserPost);
 router.get('/file/delete/:id', indexController.fileDeleteGet);
+router.get('/file/:id', indexController.fileGet);
 
 module.exports = router;

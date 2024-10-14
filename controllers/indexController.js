@@ -1,3 +1,4 @@
+const fs = require('node:fs');
 const { body, validationResult } = require('express-validator');
 const passport = require('passport');
 const bcrypt = require('bcryptjs');
@@ -103,7 +104,7 @@ const logoutGet = (req, res, next) => {
   })
 };
 
-const uploadGet = (req, res) => {
+const uploadToUserGet = (req, res) => {
   if (!req.user) res.redirect('/');
 
   res.render('upload_form', {
@@ -111,7 +112,7 @@ const uploadGet = (req, res) => {
   });
 };
 
-const uploadPost = [
+const uploadToUserPost = [
   upload.single('file'),
   async (req, res) => {  
     await prisma.file.create({
@@ -148,6 +149,12 @@ const fileDeleteGet = async (req, res) => {
     where: { id: +req.params.id }
   });
 
+  await fs.unlink(deletedFile.url, (err) => {
+    if (err) throw new Error(`File path didn't exist.`);
+
+    console.log(deletedFile.name + ' was deleted');
+  });
+
   const path = deletedFile.folderId !== null
     ? `/folder/${deletedFile.folderId}`
     : '/';
@@ -162,8 +169,8 @@ module.exports = {
   loginGet,
   loginPost,
   logoutGet,
-  uploadGet,
-  uploadPost,
+  uploadToUserGet,
+  uploadToUserPost,
   fileGet,
   fileDeleteGet,
 }
