@@ -13,5 +13,6 @@ router.get('/upload', indexController.uploadToUserGet);
 router.post('/upload', indexController.uploadToUserPost);
 router.get('/file/delete/:id', indexController.fileDeleteGet);
 router.get('/file/:id', indexController.fileGet);
+router.get('/download/:id', indexController.downloadGet);
 
 module.exports = router;

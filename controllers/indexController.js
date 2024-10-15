@@ -162,8 +162,16 @@ const fileDeleteGet = async (req, res) => {
   res.redirect(path);
 };
 
-module.exports = {
-  index,
+const downloadGet = async (req, res) => {
+  const file = await prisma.file.findUnique({
+    where: { id: +req.params.id}
+  });
+
+  res.download(file.url);
+};
+  
+  module.exports = {
+    index,
   signUpGet,
   signUpPost,
   loginGet,
@@ -173,4 +181,5 @@ module.exports = {
   uploadToUserPost,
   fileGet,
   fileDeleteGet,
+  downloadGet,
 }

@@ -24,7 +24,7 @@
     <p>Size: <%= file.size %> bytes</p>
     <p>Uploaded At: <%= new Date(file.uploadAt).toLocaleDateString(undefined ,{ day: 'numeric', month: 'long', year: 'numeric' })  %></p>
     <br>
-    <a href="">Download WIP</a>
+    <a href="/download/<%= file.id %>">Download</a>
   </main>
 </body>
 </html>
