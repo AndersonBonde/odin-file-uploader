@@ -3,9 +3,7 @@ const { body, validationResult } = require('express-validator');
 const passport = require('passport');
 const bcrypt = require('bcryptjs');
 const prisma = require('../database/prisma');
-const multer = require('multer');
-
-const upload = multer({ dest: 'uploads/' });
+const { upload } = require('../config/multer.js');
 
 const index = async (req, res) => {
   let user = undefined;
@@ -170,8 +168,8 @@ const downloadGet = async (req, res) => {
   res.download(file.url);
 };
   
-  module.exports = {
-    index,
+module.exports = {
+  index,
   signUpGet,
   signUpPost,
   loginGet,

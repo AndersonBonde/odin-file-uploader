@@ -1,9 +1,7 @@
 const fs = require('node:fs');
 const { body, validationResult } = require('express-validator');
 const prisma = require('../database/prisma');
-const multer = require('multer');
-
-const upload = multer({ dest: 'uploads/' });
+const { upload } = require('../config/multer.js');
 
 const uploadToFolderGet = (req, res) => {
   res.render('upload_form', {
