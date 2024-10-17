@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><%= title %></title>
   <link rel="stylesheet" href="/stylesheets/style.css">
+  <script src="https://kit.fontawesome.com/d9440c1829.js" crossorigin="anonymous"></script>
 </head>
 <body>
   <%- include('./partials/sidebar_nav.ejs') %>
@@ -14,10 +15,6 @@
       <div class="user_info">
         <p>User: <%= `${user.firstname} ${user.lastname}` %></p>
         <a href="/logout">Logout</a>
-      </div>
-      <div class="header_buttons">
-        <a href="/folder/upload/<%= folder.id %>">Upload a file</a>
-        <a href="/folder/create/<%= folder.id %>">Create a new folder</a>
       </div>
       <h1><%= title %></h1>
       <a href="update/<%= folder.id %>" style="font-size: .95rem;">Rename folder</a>

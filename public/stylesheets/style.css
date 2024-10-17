@@ -15,7 +15,6 @@ body {
 .sidebar_nav {
   --margin-block: 1.5rem;
   margin-block: var(--margin-block);
-  padding-inline: 1.5rem;
   height: calc(100vh - (var(--margin-block) * 2));
   min-width: 200px;
   border-right: 1px solid rgb(202, 202, 202);
@@ -29,19 +28,34 @@ body {
   height: 100%;
 }
 
-.sidebar_nav a {
+.sidebar_item {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding-inline: 6px;
+  color: black;
+}
+
+.sidebar_item i {
+  width: 24px;
+  text-align: center;
+  transform-origin: center;
+}
+
+.sidebar_item a {
   display: inline-block;
-  text-decoration: none;
   width: 100%;
-  padding: 4px;
+  padding-block: 6px;
+  padding-inline: 4px;
+  text-decoration: none;
   color: black;
 }
 
-.sidebar_nav a:visited {
+.sidebar_item a:visited {
   color: black;
 }
 
-.sidebar_nav a:hover {
+.sidebar_item a:hover {
   color: black;
   background-color: rgb(233, 233, 233);
 }
@@ -57,6 +71,35 @@ main {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding-block: 8px;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid black;
+}
+
+.header_buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.upload_button,
+.folder_button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 6px;
+  background-color: white;
+}
+
+.upload_button > i,
+.folder_button > i {
+  width: 30px;
+  margin-right: 6px;
+}
+
+.upload_button:hover,
+.folder_button:hover {
+  cursor: pointer;
+  background-color: white;
 }
 
 main h1 {
